@@ -1,27 +1,26 @@
 from gamesim import gamesim    
 
-def seasonsim(teamlist, balanced):
-    teamlist = teamlist
-    opponentlist = teamlist
-    
+def seasonsim(team_dict, balanced):
     if balanced == True:
-        for team in teamlist:
-            for opponent in opponentlist:
-                if team != opponent:
-                    result = gamesim(team, opponent)
+        for k in team_dict.keys():
+            for ok in team_dict.keys():
+                if k != ok:
+                    result = gamesim(team_dict[k], team_dict[ok])
     else:
-        for team in teamlist:
-            for opponent in team.home_opponents:
-                result = gamesim(team, opponent)
+        for k in team_dict.keys():
+            for o in team_dict[k].home_opponents:
+                print team_dict[k]
+                print team_dict[o]
+                result = gamesim(team_dict[k], team_dict[o])
 
-    teamlist = sorted(teamlist, key=lambda team: team.wins, reverse=True)
+    return team_dict
 
-    # for team in teamlist:
-    #     print "%s %s %s" %(team.name, team.wins, team.losses)
-
-    return teamlist
-
-def standingscounter(teamlist, seasonstats):
+def standingscounter(team_dict, seasonstats):
+    teamlist = []
+    #just take the team dictionary and swap it into a list
+    for k in team_dict.keys():
+      teamlist.append(team_dict[k])
+    
     bestteam = max(teamlist, key=lambda team: team.wins)
     topteams = filter(lambda team: team.wins == bestteam.wins, teamlist)
     winlessteams = filter(lambda team: team.wins == 0, teamlist)
@@ -85,8 +84,14 @@ def standingscounter(teamlist, seasonstats):
             team.win_distribution[tw] += 1
         else:
             team.win_distribution[tw] = 1
+    
+    new_team_dict = {}
+    for t in teamlist:
+      new_team_dict[t.name] = t
+    return new_team_dict
 
-def seasonreset(teamlist):
-    for team in teamlist:
-        team.wins = team.starting_wins
-        team.losses = team.starting_losses
+def seasonreset(team_dict):
+    for k in team_dict.keys():
+        team_dict[k].wins = team_dict[k].starting_wins
+        team_dict[k].losses = team_dict[k].starting_losses
+    return team_dict

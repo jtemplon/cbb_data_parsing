@@ -7,29 +7,25 @@ class SeasonStats():
     multi_team_tie = 0
     most_wins = {}
 
-def multiseasonsim(teamlist, bool):
+def multiseasonsim(team_dict, bool):
     season_counter = 1
     balanced = bool
     seasonstats = SeasonStats()
 
     #while season_counter < 10001:
     while season_counter < 10001:
-        seasonreset(teamlist)
-        seasonsim(teamlist, balanced)
-        standingscounter(teamlist, seasonstats)
+        seasonreset(team_dict)
+        seasonsim(team_dict, balanced)
+        standingscounter(team_dict, seasonstats)
         season_counter = season_counter + 1
 
     print "Name - Season Wins - Season Ties - Undefeated Seasons - Winless Seasons - Best Season - Worst Season - Total Win Margin"
-    teamlist = sorted(teamlist, key=lambda team: team.season_wins, reverse=True)
-    for team in teamlist:
-        print "%s - %s - %s - %s - %s - %s - %s - %s - %s" %(team.name, team.season_wins, team.season_ties, team.undefeated_seasons, team.winless_seasons, team.best_season, team.worst_season, team.win_margin, team.total_wins)
+    for k in team_dict.keys():
+        print "%s - %s - %s - %s - %s - %s - %s - %s - %s" %(team_dict[k].name, team_dict[k].season_wins, team_dict[k].season_ties, team_dict[k].undefeated_seasons, team_dict[k].winless_seasons, team_dict[k].best_season, team_dict[k].worst_season, team_dict[k].win_margin, team_dict[k].total_wins)
     
     print "Tie Stats: %s ties, %s two-team, %s three-team, %s more than three" %(seasonstats.tied_seasons, seasonstats.two_team_tie, seasonstats.three_team_tie, seasonstats.multi_team_tie)
     print seasonstats.most_wins
     
-    for team in teamlist:
-        print team.name
-        print team.places, team.win_distribution
-    
-    # for team in teamlist:
-    #     print team.name, team.win_distributions
+    for k in team_dict.keys():
+        print team_dict[k].name
+        print team_dict[k].places, team_dict[k].win_distribution
