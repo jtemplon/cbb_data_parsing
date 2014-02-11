@@ -9,8 +9,8 @@ def seasonsim(team_dict, balanced):
     else:
         for k in team_dict.keys():
             for o in team_dict[k].home_opponents:
-                print team_dict[k]
-                print team_dict[o]
+                #print team_dict[k]
+                #print team_dict[o]
                 result = gamesim(team_dict[k], team_dict[o])
 
     return team_dict
