@@ -32,3 +32,13 @@ def find_offense_defense(team_dict):
       team_dict[team_key].offense = float(row[7])
       team_dict[team_key].defense = float(row[11])
   return team_dict
+
+def find_conf_records(team_dict, file_name):
+  csvfile = open(file_name, 'rb')
+  records = csv.reader(csvfile)
+  for row in records:
+    if row[1] in team_dict.keys():
+      team_key = row[1]
+      team_dict[team_key].starting_wins = int(row[2])
+      team_dict[team_key].starting_losses = int(row[3])
+  return team_dict
