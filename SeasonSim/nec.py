@@ -1,102 +1,26 @@
 from multiseasonsim import multiseasonsim
+from simutil import set_up_team_objects, find_offense_defense, find_conf_records
 
-class Team():
-    def __init__(self):
-        self.win_distribution = {}
-        self.places = {}
-        self.wins = 0
-        self.losses = 0
-        self.season_wins = 0
-        self.season_ties = 0
-        self.winless_seasons = 0
-        self.undefeated_seasons = 0
-        self.best_season = 0
-        self.worst_season = 100
-        self.win_margin = 0
-        self.last_places = 0
-        self.total_wins = 0
+teamlist = ["Robert Morris", "Bryant", "Wagner", "St. Francis NY", "Mount St. Mary's", 
+            "St. Francis PA", "Fairleigh Dickinson", "Central Connecticut", 
+            "LIU Brooklyn", "Sacred Heart"]
 
-rmu = Team()
-rmu.name = "Robert Morris"
-rmu.offense = 108.2
-rmu.defense = 106.3
-rmu.starting_wins = 9
-rmu.starting_losses = 1
+team_dict = set_up_team_objects(teamlist)
+team_stats = find_offense_defense(team_dict)
+team_records = find_conf_records(team_dict, "nec.csv")
+for k in team_records.keys():
+  print team_records[k].name, team_records[k].offense, team_records[k].defense,
+  print team_records[k].starting_wins, team_records[k].starting_losses
 
-liu = Team()
-liu.name = "LIU Brooklyn"
-liu.offense = 103.1
-liu.defense = 118.2
-liu.starting_wins = 2
-liu.starting_losses = 8
+team_stats["Robert Morris"].home_opponents = ["LIU Brooklyn", "St. Francis NY"]
+team_stats["LIU Brooklyn"].home_opponents = ["Central Connecticut", "Bryant"]
+team_stats["Central Connecticut"].home_opponents = ["Mount St. Mary's"]
+team_stats["St. Francis PA"].home_opponents = ["St. Francis NY", "LIU Brooklyn"]
+team_stats["Wagner"].home_opponents = ["Sacred Heart", "Mount St. Mary's", "St. Francis PA", "Robert Morris"]
+team_stats["Sacred Heart"].home_opponents = ["LIU Brooklyn", "Central Connecticut"]
+team_stats["St. Francis NY"].home_opponents = ["Central Connecticut", "Bryant", "Fairleigh Dickinson"]
+team_stats["Mount St. Mary's"].home_opponents = ["Sacred Heart", "St. Francis PA"]
+team_stats["Fairleigh Dickinson"].home_opponents = ["Wagner", "Sacred Heart", "Robert Morris"]
+team_stats["Bryant"].home_opponents = ["Fairleigh Dickinson", "Central Connecticut"]
 
-ccsu = Team()
-ccsu.name = "Central Connecticut State"
-ccsu.offense = 97.7
-ccsu.defense = 111.9
-ccsu.starting_wins = 3
-ccsu.starting_losses = 7
-
-sfu = Team()
-sfu.name = "Saint Francis U"
-sfu.offense = 95.5
-sfu.defense = 108.9
-sfu.starting_wins = 5
-sfu.starting_losses = 5
-
-wag = Team()
-wag.name = "Wagner"
-wag.offense = 97.1
-wag.defense = 100.5
-wag.starting_wins = 6
-wag.starting_losses = 4
-
-shu = Team()
-shu.name = "Sacred Heart"
-shu.offense = 100.9
-shu.defense = 113.4
-shu.starting_wins = 1
-shu.starting_losses = 9
-
-sfc = Team()
-sfc.name = "St. Francis (NY)"
-sfc.offense = 97.8
-sfc.defense = 102.2
-sfc.starting_wins = 6
-sfc.starting_losses = 4
-
-msm = Team()
-msm.name = "Mount St. Mary's"
-msm.offense = 106.3
-msm.defense = 111.9
-msm.starting_wins = 6
-msm.starting_losses = 4
-
-fdu = Team()
-fdu.name = "Fairleigh Dickinson"
-fdu.offense = 104.7
-fdu.defense = 114.6
-fdu.starting_wins = 4
-fdu.starting_losses = 6
-
-bryant = Team()
-bryant.name = "Bryant"
-bryant.offense = 108.5
-bryant.defense = 107.4
-bryant.starting_wins = 8
-bryant.starting_losses = 2
-
-teamlist = [rmu, liu, ccsu, sfu, wag, shu, sfc, msm, fdu, bryant]
-
-rmu.home_opponents = [msm, liu, sfc]
-liu.home_opponents = [sfc, ccsu, bryant]
-ccsu.home_opponents = [shu, msm]
-sfu.home_opponents = [rmu, sfc, liu]
-wag.home_opponents = [bryant, shu, msm, sfu, rmu]
-shu.home_opponents = [liu, ccsu]
-sfc.home_opponents = [ccsu, bryant, fdu]
-msm.home_opponents = [bryant, shu, sfu]
-fdu.home_opponents = [wag, sfu, shu, rmu]
-bryant.home_opponents = [fdu, ccsu]
-
-multiseasonsim(teamlist, False)
+multiseasonsim(team_records, False)
