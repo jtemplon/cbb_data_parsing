@@ -84,7 +84,7 @@ def find_if_started(player, boxscore):
                     players.append(p)
     return player_started
 
-def find_if_started_second_half(player, plays):
+def find_if_started_second_half(player, plays, started_game):
     started = False
     starters = []
     subbed_in = []
@@ -99,7 +99,14 @@ def find_if_started_second_half(player, plays):
                 if name not in subbed_in:
                     starters.append(name)
     #print starters
+    #if he's in the starters then he obviously started
     if player in starters:
+        print "Looks like he started 2nd half"
+        started = True
+    #if he started the 1st and played the whole thing then
+    #maybe the list is short a player
+    elif len(starters) < 5 and started_game:
+        print "Fewer than five starters and he started"
         started = True
     return started
 
@@ -131,7 +138,7 @@ def find_game_splits(player, team, soup, started):
         if p["time"] > last_time and halftimes == 0:
             halftime_index = plays.index(p)
             second_half_plays = plays[halftime_index:]
-            in_game = find_if_started_second_half(pbp_name, second_half_plays)
+            in_game = find_if_started_second_half(pbp_name, second_half_plays, started)
             halftimes += 1
         if p["team"] != "":
             if "Enters Game" in p["team"] or "Leaves Game" in p["team"]:
@@ -146,6 +153,11 @@ def find_game_splits(player, team, soup, started):
                     player._team_stats_in.oreb += 1
                 else:
                     player._team_stats_out.oreb += 1
+            elif "Defensive Rebound" in p["team"]:
+                if in_game:
+                    player._team_stats_in.dreb += 1
+                else:
+                    player._team_stats_out.dreb += 1                
             elif "missed" in p["team"]:
                 if ("Layup" in p["team"]) or ("Dunk" in p["team"]) or ("Tip In" in p["team"]):
                     if in_game:
@@ -207,6 +219,11 @@ def find_game_splits(player, team, soup, started):
                     player._oppo_stats_in.oreb += 1
                 else:
                     player._oppo_stats_out.oreb += 1
+            elif "Defensive Rebound" in p["opponent"]:
+                if in_game:
+                    player._oppo_stats_in.dreb += 1
+                else:
+                    player._oppo_stats_out.dreb += 1                
             elif "missed" in p["opponent"]:
                 if ("Layup" in p["opponent"]) or ("Dunk" in p["opponent"]) or ("Tip In" in p["opponent"]):
                     if in_game:
@@ -270,6 +287,7 @@ class StatsDict(object):
         self.three_pt_m = 0
         self.three_pt_a = 0
         self.oreb = 0
+        self.dreb = 0
         
     def estimate_possessions(self):
         poss = round(self.fta * 0.475) + self.to - self.oreb + (self.two_pt_a + self.three_pt_a)
@@ -294,10 +312,11 @@ class Player(object):
         self._oppo_stats_in = StatsDict()
         self._oppo_stats_out = StatsDict()
 
-game_list = ["2688153", "2791393", "2793759", "2822420", "2828217", "2838353",
-             "2842093", "2848528", "2864561", "2881353", "2889484"]
-key_player = Player("Obekpa, Chris")
-team = "St. John's (NY)"
+game_list = ["2808373", "2811513", "2845975", "2850053", "2856585", "2876353",
+             "2888659", "2903213", "2912162", "2923034", "2940294", "2958953",
+             "2972533", "2983674", "3003910", "3027283"]
+key_player = Player("Dominique, Marvin")
+team = "Saint Peter's"
 for g in game_list:
     box_score_link = "http://stats.ncaa.org/game/index/%s" %(g)
     play_by_play_link = "http://stats.ncaa.org/game/play_by_play/%s" %(g)
@@ -310,5 +329,7 @@ print key_player._name, key_player._team_stats_in.calculate_eff(),
 print key_player._team_stats_out.calculate_eff(), key_player._oppo_stats_in.calculate_eff(),
 print key_player._oppo_stats_out.calculate_eff(), key_player._team_stats_in.estimate_possessions(),
 print key_player._team_stats_out.estimate_possessions()
+print key_player._oppo_stats_in.__dict__
+print key_player._team_stats_out.__dict__
     
     
