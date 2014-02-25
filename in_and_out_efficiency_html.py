@@ -126,8 +126,20 @@ def in_or_out(p, string, in_game):
 #when the player was in and out of the game
 def find_game_splits(player, team, soup, started):
     #this is so dumb, but have to uppercase name for PBP
+    #the replace on the end of the string is for first names like E.J.
     name_pieces = player._name.split()
-    pbp_name = name_pieces[0].upper() + name_pieces[1].upper()
+    if len(name_pieces) == 2:
+        last = name_pieces[0].upper()
+        first = name_pieces[1].upper().replace(".", "")
+    elif len(name_pieces) == 3:
+        last = name_pieces[0].upper() + " " + name_pieces[1].upper()
+        first = name_pieces[2].upper().replace(".", "")
+    print last
+    if last.endswith("JR,"):
+        print "Ends with JR"
+        last = last.replace("JR", "JR.")
+    pbp_name = last + first
+    print pbp_name
     plays = find_plays_in_html(soup)
     in_game = started
     last_time = 1200
@@ -312,11 +324,19 @@ class Player(object):
         self._oppo_stats_in = StatsDict()
         self._oppo_stats_out = StatsDict()
 
-game_list = ["2808373", "2811513", "2845975", "2850053", "2856585", "2876353",
-             "2888659", "2903213", "2912162", "2923034", "2940294", "2958953",
-             "2972533", "2983674", "3003910", "3027283"]
-key_player = Player("Dominique, Marvin")
-team = "Saint Peter's"
+game_list = ["2858904",
+        "2865173",
+        "2890353",
+        "2909453",
+        "2912020",
+        "2920427",
+        "2950733",
+        "2942194",
+        "2967733",
+        "2973901",
+        "3023114"]
+key_player = Player("Sanders Jr, Sidney")
+team = "Fairleigh Dickinson"
 for g in game_list:
     box_score_link = "http://stats.ncaa.org/game/index/%s" %(g)
     play_by_play_link = "http://stats.ncaa.org/game/play_by_play/%s" %(g)

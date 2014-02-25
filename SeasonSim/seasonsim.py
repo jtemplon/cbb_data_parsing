@@ -66,12 +66,21 @@ def standingscounter(team_dict, seasonstats):
             team.undefeated_seasons = team.undefeated_seasons + 1
 
     for team in teamlist:
+        same_win_teams = filter(lambda t: t.wins == team.wins and 
+                                t.name != team.name, teamlist)
         pl = teamlist.index(team) + 1
         if pl in team.places.keys():
             team.places[pl] += 1
         else:
-            print "new key"
+            #print "new key"
             team.places[pl] = 1
+        #at least figure out when a team ties for a spot,
+        #even if we're not breaking it
+        if len(same_win_teams) > 0:
+            if pl in team.place_ties.keys():
+                team.place_ties[pl] += 1
+            else:
+                team.place_ties[pl] = 1
     
     for team in teamlist:
         if team.wins > team.best_season:

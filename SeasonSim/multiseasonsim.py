@@ -28,4 +28,6 @@ def multiseasonsim(team_dict, bool):
     
     for k in team_dict.keys():
         print team_dict[k].name
-        print team_dict[k].places, team_dict[k].win_distribution
+        print team_dict[k].places
+        print team_dict[k].place_ties
+        print team_dict[k].win_distribution

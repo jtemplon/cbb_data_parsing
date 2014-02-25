@@ -12,16 +12,17 @@ for k in team_records.keys():
   print team_records[k].starting_wins, team_records[k].starting_losses
 
 
-team_stats["Iona"].home_opponents = ["Saint Peter's", "Monmouth", "Rider"]
-team_stats["Fairfield"].home_opponents = ["Quinnipiac", "Rider", "Marist"]
-team_stats["Quinnipiac"].home_opponents = ["Saint Peter's", "Siena"]
-team_stats["Monmouth"].home_opponents = ["Marist", "Manhattan", "Saint Peter's", "Niagara"]
-team_stats["Manhattan"].home_opponents = ["Niagara", "Iona", "Canisius"]
-team_stats["Saint Peter's"].home_opponents = ["Marist", "Fairfield", "Niagara"]
-team_stats["Marist"].home_opponents = ["Siena", "Iona", "Quinnipiac"]
-team_stats["Siena"].home_opponents = ["Canisius", "Manhattan", "Monmouth"]
-team_stats["Rider"].home_opponents = ["Manhattan", "Fairfield", "Iona", "Siena", "Canisius"]
-team_stats["Niagara"].home_opponents = ["Canisius", "Fairfield", "Quinnipiac"]
-team_stats["Canisius"].home_opponents = ["Quinnipiac", "Fairfield"]
+team_stats["Iona"].home_opponents = ["Rider"]
+team_stats["Fairfield"].home_opponents = ["Marist"]
+team_stats["Quinnipiac"].home_opponents = ["Siena"]
+team_stats["Monmouth"].home_opponents = ["Niagara"]
+team_stats["Manhattan"].home_opponents = ["Iona", "Canisius"]
+team_stats["Saint Peter's"].home_opponents = ["Fairfield", "Niagara"]
+team_stats["Marist"].home_opponents = ["Quinnipiac"]
+team_stats["Siena"].home_opponents = ["Monmouth"]
+team_stats["Rider"].home_opponents = ["Canisius"]
+team_stats["Niagara"].home_opponents = []
+team_stats["Canisius"].home_opponents = []
+team_stats["Siena"].tie_breaker = ["Rider"]
 
-#multiseasonsim(team_records, False)
+multiseasonsim(team_records, False)

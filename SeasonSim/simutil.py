@@ -4,6 +4,7 @@ class Team():
     def __init__(self, name):
         self.win_distribution = {}
         self.places = {}
+        self.place_ties = {}
         self.wins = 0
         self.losses = 0
         self.season_wins = 0

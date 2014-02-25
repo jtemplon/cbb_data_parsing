@@ -20,6 +20,11 @@ def get_game_links(team_page):
             game_links.append(link_tuple)
     return game_links
 
-game_links = get_game_links("http://stats.ncaa.org/team/index/11540?org_id=617")
+print "What's the team ID at the end of the NCAA.org URL?"
+team_id = input()
+link = "http://stats.ncaa.org/team/index/11540?org_id=%s" %(team_id)
+game_links = get_game_links(link)
 for gl in game_links:
     print gl[0], gl[1]
+for gl in game_links:
+    print '"' + gl[0] + '"'
