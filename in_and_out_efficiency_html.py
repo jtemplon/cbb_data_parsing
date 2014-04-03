@@ -324,19 +324,24 @@ class Player(object):
         self._oppo_stats_in = StatsDict()
         self._oppo_stats_out = StatsDict()
 
-game_list = ["2858904",
+game_list = ["2859843",
         "2865173",
-        "2890353",
-        "2909453",
-        "2912020",
-        "2920427",
-        "2950733",
-        "2942194",
-        "2967733",
-        "2973901",
-        "3023114"]
-key_player = Player("Sanders Jr, Sidney")
-team = "Fairleigh Dickinson"
+        "2890393",
+        "2896138",
+        "2914876",
+        "2921363",
+        "2950414",
+        "2950142",
+        "2967474",
+        "2979494",
+        "3026193",
+        "3064961",
+        "3080697",
+        "3104152",
+        "3114793",
+        "3120454"]
+key_player = Player("Evans, Chris")
+team = "Sacred Heart"
 for g in game_list:
     box_score_link = "http://stats.ncaa.org/game/index/%s" %(g)
     play_by_play_link = "http://stats.ncaa.org/game/play_by_play/%s" %(g)
@@ -350,6 +355,6 @@ print key_player._team_stats_out.calculate_eff(), key_player._oppo_stats_in.calc
 print key_player._oppo_stats_out.calculate_eff(), key_player._team_stats_in.estimate_possessions(),
 print key_player._team_stats_out.estimate_possessions()
 print key_player._oppo_stats_in.__dict__
-print key_player._team_stats_out.__dict__
+print key_player._oppo_stats_out.__dict__
     
     

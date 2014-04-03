@@ -15,7 +15,10 @@ def get_game_links(team_page):
         if cells[2].a != None:
             l = cells[2].a["href"]
             lid = l.split("?")[0].replace("/game/index/", "")
-            o = cells[1].a.string
+            try:
+                o = cells[1].a.string
+            except AttributeError:
+                o = cells[1].string
             link_tuple = (lid, o)
             game_links.append(link_tuple)
     return game_links
