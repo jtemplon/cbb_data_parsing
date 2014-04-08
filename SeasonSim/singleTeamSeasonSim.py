@@ -103,4 +103,4 @@ print expected_losses
 # Wichita St. vs. Kansas schedule: 5.59 losses expected {0: 12, 1: 60, 2: 308, 3: 869, 4: 1586, 5: 2036, 6: 2048, 7: 1557, 8: 913, 9: 404, 10: 151, 11: 45, 12: 11}
 # Kansas vs. Kansas schedule: 5.55 losses expected; {0: 4, 1: 79, 2: 380, 3: 882, 4: 1604, 5: 2071, 6: 1964, 7: 1536, 8: 861, 9: 396, 10: 164, 11: 49, 12: 8, 13: 2}
 # Wichita St. vs. Wichita St. schedule: 3.13 losses expected
-# Kansas vs. Wichita St. schedule: 
+# Kansas vs. Wichita St. schedule: 3.09 losses expected
